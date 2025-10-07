@@ -1,0 +1,12 @@
+# Medusa 2.2.5 (example output)
+target 192.168.56.102 module ssh
+[22][ssh] host: 192.168.56.102   login: root   password: toor
+1 valid login/password pair found.
+
+Summary of attack:
+  Module: ssh
+  Host: 192.168.56.102
+  Successful logins:
+    root:  (validated at 2025-10-07 14:05:32)
+  Attempts: <número_de_tentativas>
+  Duration: 00:00:42
