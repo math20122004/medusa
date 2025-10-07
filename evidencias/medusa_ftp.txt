@@ -1,0 +1,5 @@
+# Medusa 2.2.5 (example output)
+target 192.168.56.102 module ftp
+[21][ftp] host: 192.168.56.102   login: anonymous   password: anonymous@
+No valid password found for specified user(s) in this run.
+# Observação: Metasploitable2 costuma permitir logins anônimos no FTP
