@@ -1,0 +1,5 @@
+# Hydra v9.3 (example)
+[DATA] attacking service http-post-form on port 80
+[80][http-post-form] host: 192.168.56.102   login: admin   password: password123
+1 valid pair found
+# Output captured at 2025-10-07 14:12:10
